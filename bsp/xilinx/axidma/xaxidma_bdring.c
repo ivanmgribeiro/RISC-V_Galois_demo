@@ -74,7 +74,9 @@
 #include "xaxidma_bdring.h"
 #include <stdio.h>
 #include "FreeRTOS.h" // pvPortMalloc
-#include <cheri/cheri-utility.h>
+#ifdef _CAP_HW_
+	#include <cheri/cheri-utility.h>
+#endif
 
 /************************** Constant Definitions *****************************/
 /* Use 100 milliseconds for 100 MHz
@@ -1584,9 +1586,9 @@ int XAxiDma_BdRingCheck(XAxiDma_BdRing * RingPtr)
 			printf("BdRingCheck: Next Bd "
 			"ptr %x wrong, expect %x\r\n",
 				#ifdef _CAP_HW_
-				(unsigned int)XAxiDma_BdReadCap(AddrV, XAXIDMA_BD_NDESC_CAP_OFFSET),
+					(unsigned int)XAxiDma_BdReadCap(AddrV, XAXIDMA_BD_NDESC_CAP_OFFSET),
 				#else
-				(unsigned int)XAxiDma_BdRead(AddrV, XAXIDMA_BD_NDESC_OFFSET),
+					(unsigned int)XAxiDma_BdRead(AddrV, XAXIDMA_BD_NDESC_OFFSET),
 				#endif
 				(unsigned int)AddrP);
 
@@ -1612,9 +1614,9 @@ int XAxiDma_BdRingCheck(XAxiDma_BdRing * RingPtr)
 		printf("BdRingCheck: last Bd Next BD "
 		"ptr %x wrong, expect %x\r\n",
 			#ifdef _CAP_HW_
-			(unsigned int)XAxiDma_BdReadCap(AddrV, XAXIDMA_BD_NDESC_CAP_OFFSET),
+				(unsigned int)XAxiDma_BdReadCap(AddrV, XAXIDMA_BD_NDESC_CAP_OFFSET),
 			#else
-			(unsigned int)XAxiDma_BdRead(AddrV, XAXIDMA_BD_NDESC_OFFSET),
+				(unsigned int)XAxiDma_BdRead(AddrV, XAXIDMA_BD_NDESC_OFFSET),
 			#endif
 			(unsigned int)RingPtr->FirstBdPhysAddr);
 

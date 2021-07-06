@@ -60,7 +60,9 @@
 
 #include "xaxidma_bd.h"
 #include <stdio.h>
-#include <cheri/cheri-utility.h>
+#ifdef _CAP_HW_
+	#include <cheri/cheri-utility.h>
+#endif
 
 /************************** Function Prototypes ******************************/
 
